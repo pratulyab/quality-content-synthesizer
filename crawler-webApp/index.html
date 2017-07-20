@@ -10,12 +10,12 @@
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
+    
 <body>
+    
   <nav class="white" role="navigation">
     <div class="nav-wrapper container">
       <a id="logo-container" href="#" class="brand-logo" align=center><img src="logo.png" height="55px";width="55px"></a>
-
-<!--      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>-->
     </div>
   </nav>
 
@@ -25,69 +25,61 @@
         <br><br>
         <h1 class="header center white-text text-lighten-2">Web Crawler</h1>
         <div class="row center">
-          <h5 class="header col s12 light">Synthesis of quality content from the
-web for any given search query</h5>
-        </div>
-          
-          
-<!--
-        <div class="row center">
-          <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
-        </div>
--->
-       
-      
-          
+          <h5 class="header col s12 light">Synthesis of quality content from the web for any given search query</h5>
+        </div>  
         <br><br>
-
       </div>
     </div>
     <div class="parallax"><img src="background11.jpg" max-height="30px" alt="Unsplashed background img 1"></div>
   </div>
-
-
-
-
-
-  
 
   
 
   <footer class="page-footer white">
     <div class="container">
         <div class="row center">
-        <div class="input-field col s12">
-          <i class="material-icons prefix">search</i>
-          <input  id="search" type="text" class="validate">   
-          <label class="active" for="search">search</label>
-            <a class="waves-effect waves-light btn">Search</a>
-        </div>
-      </div>
+            <div class="input-field col s12">
+              <i class="material-icons prefix">search</i>
+              <input  id="search" type="text" class="validate">   
+              <label class="active" for="search">search</label>
+                
+               <!-- Modal Trigger -->
+               <button id="searchReq" data-target="modal1" data-toggle="modal" class="btn modal-trigger">Search</button>                
+            </div> 
+        </div>    
+
       <div class="row">
         <div class="col l12 s12">
-<!--          <h5 class="teal-text">Company Bio</h5>-->
-          <p class="teal-text text-lighten-1">We are a team of college students working on this project like it's our full time job. Create a tool that could crawl the web on a specific topic and
-create a synthesis of the content found – the challenge is to
-mitigate the sources depending on their quality.
-Solution should be shown content from various sources and rate
-those sources based on the quality of content. Also, solution should
-be able to crawl automatically and learn from the content and the
-source.</p>
-
-
+          <p class="teal-text text-lighten-1">We are a team of college students working on this project like it's our full time job. Create a tool that could crawl the web on a specific topic and create a synthesis of the content found – the challenge is to mitigate the sources depending on their quality. Solution should be shown content from various sources and rate those sources based on the quality of content. Also, solution should be able to crawl automatically and learn from the content and the source.</p>
         </div>
       </div>
     </div>
+      
     <div class="footer-copyright teal lighten-4">
       <div class="container blue-grey-text darken-2">
-      Created by <a class="teal-text text-darken-3 " href="http://materializecss.com">MultiHumanPerceptron</a>
+        Created by <a class="teal-text text-darken-3 ">MultiHumanPerceptron</a>
       </div>
     </div>
   </footer>
     
+        
+  <!-- MODAL STRUCTURE -->
+    <div id="modal1" class="modal">
+        <div class="modal-content"><h4>Results</h4></div>
+            
+        <div id="textDiv"><script> content();</script></div>
+        <!-- Add the data links in element in this div through JS-->
+        
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Done</a>
+        </div>
+    </div> 
+   <!-- MODAL ENDS -->
+   
+    
     <style>
         .bg-image {
-            min-height: 30px
+            min-height: 30px;
         }
         
         #index-banner {
@@ -96,8 +88,34 @@ source.</p>
     </style>
 
 
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!-- SCRIPTS -->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js">
+      $("#searchReq").click(function(){
+            
+            var search_string = $("#search").val()
+            
+            // Just change the url to the localhost server 
+            // Check how the data is required in the server and post it that way only 
+            // CHECK THE PROBLEM OF THE CROSS BROWSER ORIGIN PROBLEM
+            $.post("URL",{name: search_string},
+            function(data, status){
+                alert("Data: " + data + "\nStatus: " + status);
+                document.getElementById('modal1').innerHTML = data   
+                
+                //IF NO RESULTS THEN HANDLE THE ERRORS INSIDE IT
+                
+                //USE THIS FUNCTION TO DISPLAY THE RESPONSE LINKS DATA ON WEB APP
+                 function content(){
+                    var div = document.getElementById("textDiv");
+                    div.textContent = "my text";
+                    var text = div.textContent;
+                    var div = document.getElementById("textDiv");
+                    div.style="font-size:24px";
+                 }           
+            });
+        });     
+  </script>
+    
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
 
