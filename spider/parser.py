@@ -95,6 +95,8 @@ class GoogleParser(SearchResultParser):
 	def extract_links(self):
 		links = []
 		for h3 in self.soup.find_all('h3'):
+			if not h3.a:
+				continue
 			href = self.clean_link_from_query_string(h3.a['href'], 'q')
 			if href:
 				links.append(href.rstrip('/'))
@@ -157,6 +159,8 @@ class DuckDuckGoParser(SearchResultParser):
 	def extract_links(self):
 		links = []
 		for anchor in self.soup.find_all('a'):
+			if anchor.href:
+				continue
 			href = self.clean_link_from_query_string(anchor['href'], 'uddg')
 			if href:
 				links.append(href.rstrip('/'))
