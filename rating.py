@@ -1,16 +1,19 @@
-#normalize svd result
-#use log entropy model
+#remove pickle files and imports
 #explain data cleaning step
-#K MEANS SIMILARITY METRIC
-#n_clusters twice
 #how to align different clusters
-import pickle
+#repeated results in search
+
+#------Algo Changes-----#
+#use log entropy model
+#DONE: normalize svd result
+#DONE: kmeans by cosine similarity
+
 import numpy as np
-from sklearn.pipeline import make_pipeline
-from sklearn.decomposition import TruncatedSVD
+#import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import Normalizer
-from sklearn.cluster import KMeans, MiniBatchKMeans
+from sklearn.cluster import KMeans
+from spherical_kmeans import SphericalKMeans
+from log_entropy_vectorizer import LogEntropyVectorizer
 
 #constants
 min_common_documents = 1
@@ -19,33 +22,30 @@ min_S_threshold= 0.9
 fallback_svd_features = 4
 n_clusters = 3
 n_documents = 0
+vectorizer_name = "tf-idf"
 
-result = pickle.load(open("links-and-data", "rb")) # {'url': <URL>, 'text': <TextBlob>}
-
-
-def print_helper(clusters):
-    for i in range(len(clusters)):
-        print("\n\n[%d]:\n"%i)
-        for j in range(len(clusters[i])):
-            print("%d :"%j)
-            print(clusters[i][j][0], "\n")
-
-def print_array(A):
-    for ele in A:
-        print(ele)
+def euclidean_distance(A,B):
+    X = np.array(A)
+    Y = np.array(B)
+    return np.sqrt(np.sum(np.square(X - Y)))
 
 def rate(result):
-    n_documents = len(result)
+
     links = []
     data = []
     
     for index in range(len(result)):
-        links.append(result[index]['url'])
-        data.append(result[index]['text'])
+        if result[index]['url'] not in links:
+            links.append(result[index]['url'])
+            data.append(result[index]['text'])
 
-    vectorizer = TfidfVectorizer(max_df=max_common_document_ratio, max_features=500,
-                                    min_df=1, stop_words='english', #min_df = 2 -> 1
-                                    use_idf=True)
+    n_documents = len(links)
+    if vectorizer_name == "tf-idf":
+        vectorizer = TfidfVectorizer(max_df=max_common_document_ratio, max_features=500,
+                               min_df=1, stop_words='english')
+    elif vectorizer_name == "log-entropy":
+        vectorizer = LogEntropyVectorizer(max_df=max_common_document_ratio,
+                               min_df=1, stop_words='english')    
 
     tfidf_vectors = vectorizer.fit_transform(data)
 
@@ -61,8 +61,7 @@ def rate(result):
 
     lsa_vectors = U[:,:no_svd_features] * S[:no_svd_features]
 
-    kmeans_result = KMeans(n_clusters=n_clusters, random_state=0).fit(lsa_vectors)
-
+    kmeans_result = SphericalKMeans(n_clusters=n_clusters).fit(lsa_vectors)
     centers = kmeans_result.cluster_centers_
     labels = kmeans_result.labels_
 
@@ -81,7 +80,7 @@ def rate(result):
     
     for cluster in range(n_clusters):
         clusters[cluster].sort(key=lambda x: x[1])
-    print_helper(clusters)
+    
     final_result = []
     
     sorted_cluster_counts = cluster_counts.argsort()
@@ -90,11 +89,20 @@ def rate(result):
     for label in sorted_cluster_labels:
         for document in clusters[label]:
             final_result.append(document[0])
+    #pickle.dump(clusters, open("./pickles/sph-macbook-pro-clusters.p", "wb" ))
+    return final_result
 
-    print_array(final_result)
+#----------HELPER FUNCTIONS-----------#
+def print_helper(clusters):
+    for i in range(len(clusters)):
+        print("\n\n[%d]:\n"%i)
+        for j in range(len(clusters[i])):
+            print("%d :"%j)
+            print(clusters[i][j][0], "\n")
 
-def euclidean_distance(A,B):
-    X = np.array(A)
-    Y = np.array(B)
-    return np.sqrt(np.sum(np.square(X - Y)))
-rate(result)
+def print_array(A):
+    for ele in A:
+        print(ele)
+
+# result = pickle.load(open("./pickles/sph-macbook-pro.p", "rb"))
+# rate(result)
