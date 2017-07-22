@@ -1,6 +1,6 @@
 # Quality Content Synthesizer #
 #### ____Rates search results based on their content, for a given query____ ####
-
+#### Link: <https://unsupervised-spider.herokuapp.com/> #### 
 - - - -
 ### Problem Statement ###
     Create a tool that could scrawl the web on a specific topic and create a synthesis of the content found – the challenge is to
@@ -36,16 +36,16 @@
 
 - - - -
 ## Technology Stack ##
-#### Python #####
+#### Python (Language) #####
     * NumPy
     * SciPy
     * BeautifulSoup
     * Requests
     * Tornado
-#### HTML5/CSS3 #####
-#### JavaScript/JQuery #####
-#### Materialize CSS #####
-#### Heroku Server #####
+#### HTML5/CSS3 (Web Develeopment) #####
+#### JavaScript/JQuery (Web Development) #####
+#### Materialize CSS (Web Framework) #####
+#### Heroku Server (Deployment Server) #####
 
 
 
