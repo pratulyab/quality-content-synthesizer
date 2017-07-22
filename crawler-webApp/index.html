@@ -11,7 +11,7 @@
   
 <!--  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
-<!--  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
     
 <body>
@@ -46,10 +46,17 @@
               <input  id="search" type="text" class="validate">   
               <label class="active" for="search">search</label>
                 
-               <!-- Modal Trigger -->
-               <button id="searchReq" data-target="modal1" data-toggle="modal" class="btn modal-trigger">Search</button>                
+               <!-- Modal Trigger -->                
+               <button id="searchReq" class="btn">Search</button>                
+<!--               <button id="searchReq" data-target="modal1" data-toggle="modal" class="btn modal-trigger">Search</button>                -->
             </div> 
-        </div>    
+        </div> 
+        
+        <!-- PRE LOADER -->
+    <div id="searchLoader" class="progress">
+        <div class="determinate" style="width: 70%"></div>
+    </div>
+   <!-- PRE LOADER ENDS -->
 
       <div class="row">
         <div class="col l12 s12">
@@ -69,7 +76,35 @@
   <!-- MODAL STRUCTURE -->
     <div id="modal1" class="modal">
         <div class="modal-content"><h4>Results</h4></div>
-            
+        
+        <table>
+        <thead>
+          <tr>
+              <th>S.No</th>
+              <th>Link</th>
+              <th>Summary</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+        
         <div id="textDiv"><script> content();</script></div>
         <!-- Add the data links in element in this div through JS-->
         
@@ -78,7 +113,8 @@
         </div>
     </div> 
    <!-- MODAL ENDS -->
-   
+    
+    
     
     
     <!--  STYLE.CSS  -->    
@@ -88,7 +124,7 @@
          * Use this file to override Materialize files so you can update
          * the core Materialize files in the future
          *
-         *Made by MultiHumanPerceptron
+         * Made By MaterializeCSS.com
          */
 
         nav ul a,
@@ -153,34 +189,57 @@
             font-family: inherit;
             font-weight: 500;
         }
+        
+        #searchLoader {
+            display: none;
+        }
     </style>    
 
 
   <!-- SCRIPTS -->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js">
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous">
+
+      
       $("#searchReq").click(function(){
-            
+            console.log("zlatan")
+//          //calls the preloader tag for Determinate Preloading with %
+//          for (i = 0; i < 100; i++){
+//              document.getElementById("searchLoader").style.width = i + "%";
+//          }
+          
+          $("#searchLoader").show();
+          
             var search_string = $("#search").val()
-            
             // Just change the url to the localhost server 
             // Check how the data is required in the server and post it that way only 
             // CHECK THE PROBLEM OF THE CROSS BROWSER ORIGIN PROBLEM
-            $.post("URL",{name: search_string},
-            function(data, status){
-                alert("Data: " + data + "\nStatus: " + status);
-                document.getElementById('modal1').innerHTML = data   
-                
-                //IF NO RESULTS THEN HANDLE THE ERRORS INSIDE IT
-                
-                //USE THIS FUNCTION TO DISPLAY THE RESPONSE LINKS DATA ON WEB APP
-                 function content(){
-                    var div = document.getElementById("textDiv");
-                    div.textContent = "my text";
-                    var text = div.textContent;
-                    var div = document.getElementById("textDiv");
-                    div.style="font-size:24px";
-                 }           
+            $.ajax({ 
+                type: 'GET', 
+                url: 'www.google.com',  // 'URL/search?q='+search_string
+                //data: { q: search_string }, 
+                //dataType: 'json',
+                success: function (result) {
+                    
+                    $("#searchLoader").hide();
+                    //hiding the preloader on success
+                    
+                    
+                    // TO DEFINE HOW THE RESULT WILL BE DISPLAYED HERE IN HTML
+                    $.each(result, function(index, element) {
+                        $('body').append($('<div>', {
+                            text: element.name
+                        }));
+                    });
+                },
+                error: function (result) {
+                    //alert("Error");
+                     $("#searchLoader").hide();
+                    //hiding the preloader on failure
+                    
+                    Materialize.toast('Error, FML!', 4000)
+                }
             });
+            
         });     
   </script>
     
