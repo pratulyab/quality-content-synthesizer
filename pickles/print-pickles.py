@@ -10,3 +10,10 @@ def print_helper(clusters):
             print(clusters[i][j][1], " ", clusters[i][j][0], "\n")
 
 print_helper(clusters)
+
+sorted_cluster_counts = cluster_counts.argsort()
+sorted_cluster_labels = cluster_labels[sorted_cluster_counts[::-1]]
+
+
+print_helper(clusters)
+
