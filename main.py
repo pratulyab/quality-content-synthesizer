@@ -1,4 +1,4 @@
-from tornado import ioloop, web
+from tornado import httpserver, ioloop, web
 from utils import boot
 import json, os, sys
 
@@ -26,6 +26,9 @@ urls = [
 
 if __name__ == '__main__':
 	app = web.Application(urls) # Create Tornado web application instance
-	port = sys.argv[1] if len(sys.argv) > 1 else 8888
-	app.listen(port) # Define port 8888 to listen at
+#	port = sys.argv[1] if len(sys.argv) > 1 else 8888
+#	app.listen(port) # Define port 8888 to listen at
+	http_server = httpserver.HTTPServer(app)
+	port = int(os.environ.get("PORT", 5000))
+	http_server.listen(port)
 	ioloop.IOLoop.current().start()  # Create IOLoop instance and start it
