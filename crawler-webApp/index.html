@@ -33,7 +33,7 @@
         <br><br>
       </div>
     </div>
-    <div class="parallax"><img src="background11.jpg" max-height="30px" alt="Unsplashed background img 1"></div>
+    <div class="parallax"><img src="https://linkedinbackground.com/download/Nano-DNA.jpg" max-height="30px" alt="Unsplashed background img 1"></div>
   </div>
 
   
@@ -42,13 +42,12 @@
     <div class="container">
         <div class="row center">
             <div class="input-field col s12">
-              <i class="material-icons prefix">search</i>
-              <input  id="search" type="text" class="validate">   
+              <i class="material-icons prefix active">search</i>
+              <input  id="search" type="text" class="validate" style="color:darkslategray;">   
               <label class="active" for="search">search</label>
                 
-               <!-- Modal Trigger -->                
-               <button id="searchReq" class="btn">Search</button>                
-<!--               <button id="searchReq" data-target="modal1" data-toggle="modal" class="btn modal-trigger">Search</button>                -->
+               <!-- Modal Trigger -->                                        
+               <button id="searchReq" data-target="modal1" data-toggle="modal" class="btn modal-trigger">Search</button>                
             </div> 
         </div> 
         
@@ -75,37 +74,62 @@
         
   <!-- MODAL STRUCTURE -->
     <div id="modal1" class="modal">
-        <div class="modal-content"><h4>Results</h4></div>
+        <div class="modal-content">
+            <h4>Results</h4>
         
-        <table>
+        <table class="responsive-table centered striped">
         <thead>
           <tr>
-              <th>S.No</th>
-              <th>Link</th>
-              <th>Summary</th>
+              <th>Rank<i class="material-icons">star</i></th>
+              <th>Link <i class="material-icons">insert_link</i></th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
+            <td>1</td>
+            <td>https://www.google.co.in/?gfe_rd=cr&ei=mhZzWYKaOo7z8Ae42oDgCA</td>
           </tr>
           <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
+            <td>2</td>
+            <td>http://www.bing.com/</td>
           </tr>
           <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
+            <td>3</td>
+            <td>https://duckduckgo.com/</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>https://in.yahoo.com/?p=us</td>
+          </tr>
+            <tr>
+            <td>5</td>
+            <td>https://www.google.co.in/?gfe_rd=cr&ei=mhZzWYKaOo7z8Ae42oDgCA</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>http://www.bing.com/</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>https://duckduckgo.com/</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>https://in.yahoo.com/?p=us</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>https://duckduckgo.com/</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>https://in.yahoo.com/?p=us</td>
           </tr>
         </tbody>
       </table>
-        
-        <div id="textDiv"><script> content();</script></div>
+        </div>
+<!--        <div id="textDiv"><script> content();</script></div>-->
         <!-- Add the data links in element in this div through JS-->
         
         <div class="modal-footer">
