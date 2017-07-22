@@ -1,9 +1,10 @@
-#explain data cleaning step
-#how to align different clusters
+###
+#CREDITS
+#LogEntropyVectorizer: science_concierge (https://github.com/titipata/science_concierge/tree/master/science_concierge)
+#SphericalKMeans: spherecluster (https://github.com/clara-labs/spherecluster)
+###
 
-#Dynamic Kmeans clusters
 import numpy as np
-# import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 from spherical_kmeans import SphericalKMeans
@@ -19,7 +20,7 @@ vectorizer_name = "tf-idf"
 
 #--------TF-IDF--------#
 #Max no. of words allowed in tf-idf vectors 
-n_tfidf_features = 5000
+n_tfidf_features = 3000
 
 #Any word appearing to less than 2 documents is removed 
 min_common_documents = 2
@@ -72,14 +73,19 @@ def rate(result):
     #Applying SVD to tf-idf vectors
     U, S, V = np.linalg.svd(tfidf_vectors.toarray(), full_matrices=True)
 
+    #We will only consider those columns of U for which S[column] > min_S_threshold 
     n_svd_features = 0
     for index in range(len(S)):
         if(S[index] < min_S_threshold):
             no_svd_features = index
             break
+
+    #But if number of colums considered < 2, we set it to fallback_svd_features
     if(n_svd_features <= 2):
         n_svd_features = fallback_svd_features
 
+    #Multiply selected columns with it's respective S values
+    # So that we give importance to the concepts which our algorithm is more confident about
     lsa_vectors = U[:,:no_svd_features] * S[:no_svd_features]
 
     #Performing Spherical K means Clustering on LSA Vectors
@@ -126,7 +132,6 @@ def rate(result):
         for document in clusters[label]:
             final_result.append(document[0])
     
-    # pickle.dump(clusters, open("./pickles/sph-macbook-pro-clusters.p", "wb" ))
     return final_result
 
 #----------HELPER FUNCTIONS-----------#
@@ -141,5 +146,3 @@ def print_array(A):
     for ele in A:
         print(ele)
 
-# result = pickle.load(open("./pickles/sph-macbook-pro.p", "rb"))
-# rate(result)
