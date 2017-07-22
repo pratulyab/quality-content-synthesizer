@@ -3,19 +3,22 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>UnitedByHCL</title>
+  <title>#UNITEDBYHCL</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    
+  
+<!--  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+<!--  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
 </head>
     
 <body>
     
   <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo" align=center><img src="logo.png" height="55px";width="55px"></a>
+    <div class="nav-wrapper container" id="nav-united">
+      <a id="logo-container" href="#" class="brand-logo" align=center><img src="logo.png" height="55px";width="55px">#UNITEDBYHCL</a>
     </div>
   </nav>
 
@@ -77,15 +80,80 @@
    <!-- MODAL ENDS -->
    
     
+    
+    <!--  STYLE.CSS  -->    
     <style>
-        .bg-image {
+        /* Custom Stylesheet */
+        /**
+         * Use this file to override Materialize files so you can update
+         * the core Materialize files in the future
+         *
+         *Made by MultiHumanPerceptron
+         */
+
+        nav ul a,
+        nav .brand-logo {
+          color: #444;
+        }
+
+        p {
+          line-height: 2rem;
+        }
+
+        .button-collapse {
+          color: #26a69a;
+        }
+
+        .parallax-container {
+          min-height: 380px;
+          line-height: 0;
+          height: auto;
+          color: rgba(255,255,255,.9);
+        }
+          .parallax-container .section {
+            width: 100%;
+          }
+
+        @media only screen and (max-width : 992px) {
+          .parallax-container .section {
+            position: absolute;
+            top: 40%;
+          }
+          #index-banner .section {
+            top: 10%;
+          }
+        }
+
+        @media only screen and (max-width : 600px) {
+          #index-banner .section {
+            top: 0;
+          }
+        }
+
+        .icon-block {
+          padding: 0 15px;
+        }
+        .icon-block .material-icons {
+          font-size: inherit;
+        }
+
+        footer.page-footer {
+          margin: 0;
+        }
+        
+         .bg-image {
             min-height: 30px;
         }
         
         #index-banner {
             min-height: 314px;
         }
-    </style>
+        #logo-container {
+            color: #da181f;
+            font-family: inherit;
+            font-weight: 500;
+        }
+    </style>    
 
 
   <!-- SCRIPTS -->
@@ -116,8 +184,22 @@
         });     
   </script>
     
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+    <!--  INIT.JS  -->
+  <script>
+      (function($){
+          $(function(){
+
+            $('.button-collapse').sideNav();
+            $('.parallax').parallax();
+            $('#modal1').modal();
+
+          }); // end of document ready
+        })(jQuery); // end of jQuery name space
+  </script>
+    
+<!--  <script src="js/materialize.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+  
 
   </body>
 </html>
