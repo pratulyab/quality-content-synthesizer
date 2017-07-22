@@ -7,8 +7,8 @@
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
-from spherical_kmeans import SphericalKMeans
-from log_entropy_vectorizer import LogEntropyVectorizer
+from rater.spherical_kmeans import SphericalKMeans
+from rater.log_entropy_vectorizer import LogEntropyVectorizer
 
 #------------CONSTANTS------------#
 
