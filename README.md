@@ -29,13 +29,13 @@
     The Algorithm would compare all results with each other and return the results containing the most common information.
 
 - - - -
-### Results ###
+### RESULTS ###
 
 - - - -
-### Scalability ###
+### SCALIBILITY ###
 
 - - - -
-## Technology Stack ##
+## TECHNOLOGY STACK ##
 #### Python (Language) #####
     * NumPy
     * SciPy
