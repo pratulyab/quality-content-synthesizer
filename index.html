@@ -94,9 +94,9 @@
     <div class="section no-pad-bot">
       <div class="container">
         <br><br>
-        <h1 class="header center white-text text-lighten-2">Web Crawler</h1>
+        <h1 class="header center white-text text-lighten-2" style="background-color: rgba(0, 0, 0, 0.1)">Web Crawler</h1>
         <div class="row center">
-          <h5 class="header col s12 light">Synthesis of quality content from the web for any given search query</h5>
+          <h5 class="header col s12 light" style="background-color: rgba(0, 0, 0, 0.3)">Synthesis of quality content from the web for any given search query</h5>
         </div>  
         <br><br>
       </div>
@@ -108,13 +108,23 @@
   <footer class="page-footer white">
     <div class="container">
         <div class="row center">
-            <div class="input-field col s12 black-text">
-              <i class="material-icons prefix">search</i>
-              <input  id="search" type="text" class="validate">   
+            <div class="col s2" style="color:darkslategray">
+                  <form action="#">
+                    <p class="range-field">
+                      <label for="test5" >Links To Scrape</label>    
+                      <input type="range" id="test5" min="10" max="50" />
+                    </p>
+                  </form>     
+            </div>
+            
+            <div class="input-field col s10">
+              <i class="material-icons prefix active">search</i>
+              <input  id="search" type="text" class="validate" style="color:darkslategray;" required="" aria-required="true">   
               <label class="active" for="search">search</label>
                 
-               <button id="searchReq" class="btn">Search</button>                
-            </div> 
+               <!-- Modal Trigger -->                                        
+               <button id="searchReq" data-target="modal1" data-toggle="modal" class="btn modal-trigger">Search</button>                
+            </div>    
         </div> 
         
         <!-- PRE LOADER -->
@@ -132,7 +142,7 @@
       
     <div class="footer-copyright teal lighten-4">
       <div class="container blue-grey-text darken-2">
-        Created by <a class="teal-text text-darken-3 ">MultiHumanPerceptron</a>
+        Created By <a class="teal-text text-darken-3 " href="https://www.hackerearth.com/sprints/unitedbyhcl/dashboard/MultiHumanPerceptron/team/">MultiHumanPerceptron</a> <a class="black-text text-darken-3" style="font-weight:800" href="https://github.com/pratulyab/quality-content-synthesizer">GitHub</a>
       </div>
     </div>
   </footer>
@@ -163,15 +173,21 @@
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
   <script>
+      
+     
+      
   		$('#searchLoader').hide();
       $("#searchReq").click(function(){
 			var $search_button = $(this);
-            var search_string = $("#search").val()
-                               
+            var search_string = $("#search").val();
+            var n = $($('.range-field').find('span.value')[0]).text();
 			$.ajax({
 				url: '/search/',
 				type: 'GET',
-				data: {'q': search_string},
+				data: {
+                    'q': search_string,
+                    'n': n
+                },
 				processData: true,
 				dataType: 'json',
 				beforeSend: function() {
@@ -223,6 +239,11 @@
 
             $('.button-collapse').sideNav();
             $('.parallax').parallax();
+            $('#modal1').modal();
+            $('select').material_select();  
+            $('.tooltipped').tooltip({delay: 50});
+            $('.tap-target').tapTarget('open');
+            $('.tap-target').tapTarget('close');  
 
           }); // end of document ready
         })(jQuery); // end of jQuery name space
