@@ -76,6 +76,20 @@
         #searchLoader {
             display: none;
         }
+        
+        #result-modal {
+            color: black;
+        }
+        
+        #linksToScrape {
+            color: :black;
+        }
+        
+        #range-modal {
+            color:black;
+        }
+        
+        
     </style>    
 
 
@@ -86,7 +100,7 @@
     
   <nav class="white" role="navigation">
     <div class="nav-wrapper container" id="nav-united">
-      <a id="logo-container" href="#" class="brand-logo" align=center><img src="https://s-media-cache-ak0.pinimg.com/originals/b9/fa/a9/b9faa9eb4a602d1188eef00897c19320.jpg" height="55px";width="55px">#UNITEDBYHCL</a>
+      <a id="logo-container" href="#" class="brand-logo" align=center><img src="https://s-media-cache-ak0.pinimg.com/originals/b9/fa/a9/b9faa9eb4a602d1188eef00897c19320.jpg" height="55px";width="55px"><span class="hide-on-small-only">#UNITEDBYHCL</span></a>
     </div>
   </nav>
 
@@ -108,16 +122,19 @@
   <footer class="page-footer white">
     <div class="container">
         <div class="row center">
-            <div class="col s2" style="color:darkslategray">
+            <div class="col s12 m3 l3" style="color:darkslategray">
                   <form action="#">
                     <p class="range-field">
-                      <label for="test5" >Links To Scrape</label>    
-                      <input type="range" id="test5" min="10" max="50" />
+                      <label for="test5" >
+                          #LINKS TO SCRAPE<i data-target="range-modal" data-toggle="modal" class="material-icons modal-trigger" style="color:#0097a7;cursor:pointer;">info</i>
+                      </label>    
+                      <input type="range" id="test5" min="10" max="50"/>    
+                        
                     </p>
                   </form>     
             </div>
             
-            <div class="input-field col s10">
+            <div class="input-field col s12 m9 l9">
               <i class="material-icons prefix active">search</i>
               <input  id="search" type="text" class="validate" style="color:darkslategray;" required="" aria-required="true">   
               <label class="active" for="search">Search</label>
@@ -126,6 +143,11 @@
                <button id="searchReq" data-target="modal1" data-toggle="modal" class="btn modal-trigger">Search</button>                
             </div>    
         </div> 
+        <div id="linksToScrape" class="row" style="color:black;">
+            <div class="col s12">
+                <a id="menu" style="cursor:pointer;align:center;color:#da181f;font-size:95px;float:right;"><i class="material-icons" onclick="$('.tap-target').tapTarget('open')" style="font-size:45px;">info</i></a>&nbsp;&nbsp;&nbsp;&nbsp;    
+            </div>
+        </div>
         
         <!-- PRE LOADER -->
     <div id="searchLoader" class="progress">
@@ -152,6 +174,17 @@
         </div>
     </div> 
    <!-- MODAL ENDS -->
+        
+        <!-- MODAL STRUCTURE -->
+    <div id="range-modal" class="modal modal-fixed-footer">
+        <div class="modal-content">
+			<h4 class="flow-text">What's the need of this?<span id="result-heading"></span></h4>
+		</div>   
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div> 
+   <!-- MODAL ENDS -->
     
     <!-- FEATURE DISCOVERY -->
         <div class="tap-target-wrapper" style="right: -348px; bottom: -327px; position: fixed;">
@@ -171,7 +204,7 @@
         <div class="col l12 s12">
           <p class="teal-text text-lighten-1">We are a team of college students working on this project like it's our full time job. To Create a tool that could crawl the web on a specific topic and create a synthesis of the content found – the challenge is to mitigate the sources depending on their quality. Solution shows content from various sources and rates those sources based on the quality of content. Also, our solution is able to crawl automatically and learn from the content and the source.</p>
             <!--   .tap-target   -->
-            <a id="menu" onclick="$('.tap-target').tapTarget('open')" style="cursor:pointer;float:right;color:#da181f;font-size:95px"><i class="material-icons" onclick="$('.tap-target').tapTarget('open')" style="font-size:45px;">info</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+            
         </div>
       </div>
     </div>
@@ -256,10 +289,9 @@
             $('.button-collapse').sideNav();
             $('.parallax').parallax();
             $('#modal1').modal();
+            $('#range-modal').modal();  
             $('select').material_select();  
-            $('.tooltipped').tooltip({delay: 50});
-            $('.tap-target').tapTarget('open');
-            $('.tap-target').tapTarget('close');  
+            $('.tooltipped').tooltip({delay: 50});  
 
           }); // end of document ready
         })(jQuery); // end of jQuery name space
