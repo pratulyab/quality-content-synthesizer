@@ -10,14 +10,29 @@ class LandingHandler(web.RequestHandler):
 class SearchHandler(web.RequestHandler):
 	@web.asynchronous # Async connection
 	def get(self):
-		query = str(self.get_query_argument('q'))
-		boot(query, callback=self.send_response)
+		try:
+			query = str(self.get_query_argument('q'))
+			if not query:
+				self.send_response([]) # writing back none
+				return
+			n = int(self.get_query_argument('n'))
+			if n == 0:
+				self.send_response([])
+				return
+		except ValueError:
+			# Error converting to int
+			n = 30 # Default in HTML
+		except Exception as e:
+			self.send_response([])
+			return
+		boot(query, n, callback=self.send_response) # Boot spider
 
 	def send_response(self, *args):
 		self.result = args[0]
-		self.write(json.dumps(self.result, indent=4))
+		self.write(json.dumps(self.result))
 		self.finish()
 
+# Url - Controller mapping
 urls = [
 	(r'/', LandingHandler),
 	(r'/search/?$', SearchHandler),
