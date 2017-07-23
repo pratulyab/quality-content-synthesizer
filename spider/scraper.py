@@ -1,59 +1,128 @@
-import requests
-from urllib.parse import urlparse
-from .parser import *
+import os, sys, time
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from datetime import timedelta
+from rater.rating import rate
+from spider.parser import PARSER_LOOKUP
+from tornado import gen, httpclient, ioloop, queues, web
+from urllib.parse import quote_plus, urlparse
 
-class Crawler(object):
-	''' Crawler crawls the url '''
+SEARCH_ENGINES = {
+	'bing'       : {'url': 'https://www.bing.com/search?q=%s&count=100'},
+	'duckduckgo' : {'url': 'https://duckduckgo.com/html?q=%s'},
+	'google'     : {'url': 'https://google.com/search?q=%s&num=100'},
+	'yahoo'      : {'url': 'https://search.yahoo.com/search?p=%s&n=100'},
+}
 
-	REQUEST_TIMEOUT = 5 # seconds
+CONCURRENCY = 10 # Num. Of Concurrent Workers
 
-	def __init__(self, url, *args, **kwargs):
-		self.url = url
-		self.response = self._send_request()
-
-	def _send_request(self):
-		try:
-			r = requests.get(self.url, timeout=Crawler.REQUEST_TIMEOUT)
-			r.raise_for_status()
-			return r
-		except Exception as e:
-			print(e)
-			return None
-
-
-class TextScraper(Crawler):
-	''' TextScraper scrapes the crawled page for text '''
-
-	def __init__(self, url, *args, **kwargs):
-		super(TextScraper, self).__init__(url, *args, **kwargs)
-		self.scraped_result = ''
-		if self.response:
-			parser = TextParser(self.response.text)
-			self.scraped_result = parser.get_text()
+@gen.coroutine
+def get_text_from_url(url):
+	''' Crawls url, scrapes the page and parses the text '''
 	
-	def get_corpus(self):
-		return self.scraped_result
+	try:
+		response = yield httpclient.AsyncHTTPClient().fetch(url, request_timeout=5)
+		html = response.body #if isinstance(response.body, str) else response.body.decode()
+		parser = PARSER_LOOKUP['text'](html)
+		text = parser.get_text(encoding='utf-8')
+	except Exception as e:
+		print('Exception: %s %s' % (e, url))
+		raise gen.Return('')
+	
+	raise gen.Return(text)
+
+def get_se_parser(url):
+	''' Returns particular Search Engine parser class based on domain of url if found in PARSER_LOOKUP; otherwise None '''
+	subdomain = urlparse(url).netloc
+	domain = subdomain.split('.')[-2].lower()
+	return PARSER_LOOKUP.get(domain)
+
+@gen.coroutine
+def get_links_from_url(url):
+	''' Crawls url, scrapes search result page and parses for results' links '''
+	
+	try:
+		response = yield httpclient.AsyncHTTPClient().fetch(url, request_timeout=10)
+		try:
+			html = response.body if isinstance(response.body, str) else response.body.decode()
+		except:
+			html = response.body
+		parser = get_se_parser(url)(html)
+		links = parser.get_links()
+	except Exception as e:
+		print('Exception: %s %s' % (e, url))
+		raise gen.Return([])
+	
+	raise gen.Return(links)
 
 
-class LinkScraper(Crawler):
-	''' LinkScraper scrapes the crawled page for links (Used for search results) '''
+@gen.coroutine
+def boot(query):
+	query = quote_plus(query)
+	start = time.time()
+	se_queue = queues.Queue() # Search Engine Links Queue
+	links_queue = queues.Queue()
+	processed = set()
+	fetching, fetched = set(), set()
+	result = list()
 
-	def __init__(self, url, *args, **kwargs):
-		super(LinkScraper, self).__init__(url, *args, **kwargs)
-		self.scraped_links = None
-		if self.response:
-			parser = self.get_parser(url)(self.response.text)
-			self.scraped_links = parser.get_links()
+	@gen.coroutine
+	def scrape_link():
+		url = yield se_queue.get()
+		try:
+			if url in fetching:
+				return
+#			print('fetching url', url)
+			fetching.add(url)
+			links = yield get_links_from_url(url)
+			fetched.add(url)
+#			print(len(links), 'links fetched from', url)
+			for each in links:
+				if each.startswith('http'):
+					yield links_queue.put(each) # Adding to links_queue
+		finally:
+			se_queue.task_done()
 
-	def get_links(self):
-		return self.scraped_links
+	@gen.coroutine
+	def scrape_text():
+		url = yield links_queue.get()
+		try:
+			if url in processed:
+				return
+#			print('processing url', url)
+			processed.add(url)
+			text = yield get_text_from_url(url)
+			fetched.add(url)
+			if text:
+				result.append({'url': url, 'text': str(text)})
+			else:
+				print('no text for', url)
+		finally:
+			links_queue.task_done()
 
-#	def get_links(self, n):
-#		return self.scraped_links[:n]
+	@gen.coroutine
+	def create_worker(who):
+		if who == 'link_scraper':
+			while True:
+				yield scrape_link()
+		else:
+			# text_scraper
+			while True:
+				yield scrape_text()
 
-	@staticmethod
-	def get_parser(url):
-		''' Returns parser class based on domain of url if found in PARSER_LOOKUP; otherwise None '''
-		subdomain = urlparse(url).netloc
-		domain = subdomain.split('.')[-2].lower()
-		return PARSER_LOOKUP.get(domain)
+	for key,se in SEARCH_ENGINES.items():
+		se_queue.put(str(se['url'] % query))
+
+	for _ in range(2):
+		create_worker(who='link_scraper')
+	
+	yield se_queue.join(timeout=timedelta(seconds=120)) # Block until queue is empty or timeout is achieved
+	
+	for _ in range(CONCURRENCY):
+		create_worker(who='text_scraper')
+	
+	yield links_queue.join(timeout=timedelta(seconds=300))
+	print('Scraped %d URLs in %d seconds.' % (len(fetched), time.time() - start))
+	start = time.time()
+	result = rate(result)
+	print('Rated in %f seconds' % (time.time() - start))
+	raise gen.Return(result)

@@ -1,5 +1,20 @@
+''' DEPRECATED. This script boots the blocking spider and returns results.
+	However, this is no longer user.
+	Please refer to spider/scraper.py where all this logic has been adapted to work in an asynchronous fashion using Tornado Web Framework
+'''
+
+# # #
+# Haven't added multi-threading to this because the architecture has been shifted to asynchronous.
+# concurrency has been achieved there. Please refer spider/scraper.py
+# # #
+
 from urllib.parse import quote_plus
-from spider.scraper import LinkScraper, TextScraper
+try:
+	from spider.deprecated.scraper import LinkScraper, TextScraper # Deprecated Scraper (BLOCKING + SYNCHRONOUS)
+except ImportError:
+	import os, sys
+	sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+	from deprecated.scraper import LinkScraper, TextScraper
 
 SE = {
 	'bing'       : {'url': 'https://www.bing.com/search?q=%s&count=100'},

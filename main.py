@@ -1,5 +1,5 @@
 from tornado import httpserver, ioloop, web
-from utils import boot
+from spider.scraper import boot
 import json, os, sys
 
 class LandingHandler(web.RequestHandler):
