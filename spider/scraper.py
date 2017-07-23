@@ -68,7 +68,7 @@ def boot(query, n):
 	fetching, fetched, processed = set(), set(), set() 
 	result = list()
 	TOTAL_PROCESSED = list() # Hack to limit slider range, because global int variable doesn't work with coroutine	
-	n = n + 20 # extra 20 accounts for urls with no text or request exceptions. Tries best to provide a total of n with text
+	n = n + int(n * 0.4) # extra 20 accounts for urls with no text or request exceptions. Tries best to provide a total of n with text
 	# Limiting this because of Heroku drawbacks as mentioned in the documentation(under DISCLAIMER) and the demo url.
 	# Link to heroku issue: https://devcenter.heroku.com/articles/request-timeout
 
