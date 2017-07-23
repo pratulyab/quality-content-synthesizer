@@ -132,23 +132,8 @@
         <div class="indeterminate" style="width: 70%"></div>
     </div>
    <!-- PRE LOADER ENDS -->
-
-      <div class="row">
-        <div class="col l12 s12">
-          <p class="teal-text text-lighten-1">We are a team of college students working on this project like it's our full time job. Create a tool that could crawl the web on a specific topic and create a synthesis of the content found – the challenge is to mitigate the sources depending on their quality. Solution should be shown content from various sources and rate those sources based on the quality of content. Also, solution should be able to crawl automatically and learn from the content and the source.</p>
-        </div>
-      </div>
-    </div>
-      
-    <div class="footer-copyright teal lighten-4">
-      <div class="container blue-grey-text darken-2">
-        Created By <a class="teal-text text-darken-3 " href="https://www.hackerearth.com/sprints/unitedbyhcl/dashboard/MultiHumanPerceptron/team/">MultiHumanPerceptron</a> <a class="black-text text-darken-3" style="font-weight:800" href="https://github.com/pratulyab/quality-content-synthesizer">GitHub</a>
-      </div>
-    </div>
-  </footer>
- 
         
-  <!-- MODAL STRUCTURE -->
+        <!-- MODAL STRUCTURE -->
     <div id="result-modal" class="modal modal-fixed-footer">
         <div class="modal-content">
 			<h4 class="flow-text">Results<span id="result-heading"></span></h4>
@@ -167,7 +152,37 @@
         </div>
     </div> 
    <!-- MODAL ENDS -->
+    
+    <!-- FEATURE DISCOVERY -->
+        <div class="tap-target-wrapper" style="right: -348px; bottom: -327px; position: fixed;">
+            <div class="tap-target red darken-2" data-activates="searchReq">
+                <div class="tap-target-content white-text" style="width: 456px; height: 400px; top: 0px; right: 0px; bottom: 0px; left: 0px; padding: 56px; vertical-align: bottom;">
+                    <p class="white-text">
+                        The server we deployed on is heroku sever and it has limitations of it because it is a free deployment server. In future we will transition our Quality content crawler to  a dedicated Server like Amazon Ec2.
+                    </p>
+                </div>
+            </div>
+        </div>
+    <!-- FEATURE DISCOVERY ENDS -->
+    
 
+      <div class="row">
+        <div class="col l12 s12">
+          <p class="teal-text text-lighten-1">We are a team of college students working on this project like it's our full time job. Create a tool that could crawl the web on a specific topic and create a synthesis of the content found – the challenge is to mitigate the sources depending on their quality. Solution should be shown content from various sources and rate those sources based on the quality of content. Also, solution should be able to crawl automatically and learn from the content and the source.</p>
+            <!--   .tap-target   -->
+            <a id="menu" onclick="$('.tap-target').tapTarget('open')" style="cursor:pointer;float:right;color:#da181f;font-size:95px"><i class="material-icons" onclick="$('.tap-target').tapTarget('open')" style="font-size:45px;">info</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+      
+    <div class="footer-copyright teal lighten-4">
+      <div class="container blue-grey-text darken-2">
+        Created By <a class="teal-text text-darken-3 " href="https://www.hackerearth.com/sprints/unitedbyhcl/dashboard/MultiHumanPerceptron/team/">MultiHumanPerceptron</a> <a class="black-text text-darken-3" style="font-weight:800" href="https://github.com/pratulyab/quality-content-synthesizer">GitHub</a>
+      </div>
+    </div>
+    </footer>
+    
+    
   <!-- SCRIPTS -->
 
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
