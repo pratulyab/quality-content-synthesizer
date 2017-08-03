@@ -21,7 +21,7 @@ def get_text_from_url(url):
 	''' Crawls url, scrapes the page and parses the text '''
 	
 	try:
-		response = yield httpclient.AsyncHTTPClient().fetch(url, request_timeout=5) # Asynch network fetch call
+		response = yield httpclient.AsyncHTTPClient().fetch(url, request_timeout=3) # Asynch network fetch call
 		html = response.body #if isinstance(response.body, str) else response.body.decode()
 		parser = PARSER_LOOKUP['text'](html) # Create specific parser object
 		text = parser.get_text(encoding='utf-8') # Parse text
@@ -42,7 +42,7 @@ def get_links_from_url(url):
 	''' Crawls url, scrapes search result page and parses for results' links '''
 	
 	try:
-		response = yield httpclient.AsyncHTTPClient().fetch(url, request_timeout=10)
+		response = yield httpclient.AsyncHTTPClient().fetch(url, request_timeout=4)
 		try:
 			html = response.body if isinstance(response.body, str) else response.body.decode()
 		except:
