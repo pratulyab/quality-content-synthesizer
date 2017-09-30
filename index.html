@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>#UNITEDBYHCL</title>
+  <title>#HACK4RIGHTS</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -20,7 +20,8 @@
         }
 
         .button-collapse {
-          color: #26a69a;
+/*          color: #26a69a;*/
+          color: #002D6F;    
         }
 
         .parallax-container {
@@ -68,7 +69,7 @@
             min-height: 314px;
         }
         #logo-container {
-            color: #da181f;
+            color: #002D6F;
             font-family: inherit;
             font-weight: 500;
         }
@@ -89,6 +90,19 @@
             color:black;
         }
         
+        input[type=range] {
+            background-color: #002D6F;
+            color: #002D6F;
+        }
+        
+        input[type=range]+.thumb {
+            background-color: #002D6F;
+        }
+        
+        input[type=range]+.thumb .value {
+            color: #002D6F;
+        }
+        
         
     </style>    
 
@@ -100,7 +114,7 @@
     
   <nav class="white" role="navigation">
     <div class="nav-wrapper container" id="nav-united">
-      <a id="logo-container" href="#" class="brand-logo" align=center><img src="https://s-media-cache-ak0.pinimg.com/originals/b9/fa/a9/b9faa9eb4a602d1188eef00897c19320.jpg" height="55px";width="55px"><span class="hide-on-small-only">#UNITEDBYHCL</span></a>
+      <a id="logo-container" href="#" class="brand-logo" align=center><img src="https://he-s3.s3.amazonaws.com/media/cache/57/8c/578c2af1f243934e22bd8cd60c32dfa4.png" height="55px";width="55px"><span class="hide-on-small-only">HACKORACY</span></a>
     </div>
   </nav>
 
@@ -108,9 +122,9 @@
     <div class="section no-pad-bot">
       <div class="container">
         <br><br>
-        <h1 class="header center white-text text-lighten-2" style="background-color: rgba(0, 0, 0, 0.1)">Web Crawler</h1>
+        <h1 class="header center white-text text-lighten-2" style="background-color: rgba(0, 0, 0, 0.1)">Unsupervised Spider</h1>
         <div class="row center">
-          <h5 class="header col s12 light" style="background-color: rgba(0, 0, 0, 0.3)">Synthesis of quality content from the web for any given search query</h5>
+          <h5 class="header col s12 light" style="background-color: rgba(0, 0, 0, 0.3)">A tool for fact-checking and deciphering fact from fiction</h5>
         </div>  
         <br><br>
       </div>
@@ -125,27 +139,32 @@
             <div class="col s12 m3 l3" style="color:darkslategray">
                   <form action="#">
                     <p class="range-field">
-                        <span><i data-target="range-modal" data-toggle="modal" class="material-icons modal-trigger" style="color:#0097a7;cursor:pointer;">info</i></span>
-                      <label for="test5" >
+                        <span><i data-target="range-modal" data-toggle="modal" class="material-icons modal-trigger" style="color:#002D6F;cursor:pointer;">info</i></span>
+                      <label for="test5" style="color:#002D6F">
                           #LINKS TO SCRAPE
                       </label>    
-                      <input type="range" id="test5" min="10" max="50"/>    
+                      <input type="range" id="test5" min="10" max="50" />    
                         
                     </p>
                   </form>     
             </div>
             
             <div class="input-field col s12 m9 l9">
-              <i class="material-icons prefix active">search</i>
+              <i class="material-icons prefix active" style="color:#002D6F">search</i>
               <input  id="search" type="text" class="validate" style="color:darkslategray;" required="" aria-required="true">   
-              <label class="active" for="search">Search</label>
+              <label class="active" for="search" >Search</label>
                 
                <!-- Modal Trigger -->                                        
-               <button id="searchReq" data-target="modal1" data-toggle="modal" class="btn modal-trigger">Search</button>                
+               <button id="searchReq" data-target="modal1" data-toggle="modal" style="background-color:#002D6F" class="btn modal-trigger" >Search</button>                
             </div>    
         </div> 
         <div id="linksToScrape" class="row" style="color:black;">
-            <div class="col s12">
+            <div class="col s12 m10 l11 ">
+          <p style="color:#002D6F">We are a team of college students working on this project like it's our full time job. To Create a tool that could crawl the web on a specific topic and create a synthesis of the content found – the challenge is to mitigate the sources depending on their quality. Solution shows content from various sources and rates those sources based on the quality of content. Also, our solution is able to crawl automatically and learn from the content and the source.</p>
+            <!--   .tap-target   -->
+            
+        </div>
+            <div class="col s12 m2 l1">
                 <a id="menu" style="cursor:pointer;align:center;color:#da181f;font-size:95px;float:right;"><i class="material-icons" onclick="$('.tap-target').tapTarget('open')" style="font-size:45px;">info</i></a>&nbsp;&nbsp;&nbsp;&nbsp;    
             </div>
         </div>
@@ -189,7 +208,7 @@
 			</p>
 		</div>   
         <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" >Close</a>
         </div>
     </div> 
    <!-- MODAL ENDS -->
@@ -208,18 +227,12 @@
     <!-- FEATURE DISCOVERY ENDS -->
     
 
-      <div class="row">
-        <div class="col l12 s12">
-          <p class="teal-text text-lighten-1">We are a team of college students working on this project like it's our full time job. To Create a tool that could crawl the web on a specific topic and create a synthesis of the content found – the challenge is to mitigate the sources depending on their quality. Solution shows content from various sources and rates those sources based on the quality of content. Also, our solution is able to crawl automatically and learn from the content and the source.</p>
-            <!--   .tap-target   -->
-            
-        </div>
-      </div>
+      
     </div>
       
-    <div class="footer-copyright teal lighten-4">
+    <div class="footer-copyright" style="color:#002D6F">
       <div class="container blue-grey-text darken-2">
-        Created By <a class="teal-text text-darken-3 " href="https://www.hackerearth.com/sprints/unitedbyhcl/dashboard/MultiHumanPerceptron/team/">MultiHumanPerceptron</a> <a class="black-text text-darken-3" style="font-weight:800" href="https://github.com/pratulyab/quality-content-synthesizer">GitHub</a>
+        Created By <a style="color:#002D6F" href="https://www.hackerearth.com/sprints/unitedbyhcl/dashboard/MultiHumanPerceptron/team/">MultiHumanPerceptron</a> <a class="black-text text-darken-3" style="font-weight:800" href="https://github.com/pratulyab/quality-content-synthesizer">GitHub</a>
       </div>
     </div>
     </footer>
