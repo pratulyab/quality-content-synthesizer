@@ -18,7 +18,7 @@ class TextParser(object):
 	def _extract_text(self):
 		texts = []
 		for each in self.soup.find_all(True):
-			text = each.get_text(separator=' ')
+			text = each.get_text(separator=' ', strip=True)
 			if text:
 				texts.append(text.strip())
 		self.text = " ".join(texts)
@@ -36,10 +36,11 @@ class TextParser(object):
 	@staticmethod
 	def strain_through(tag, attrs):
 		if TextParser.tags_regex.match(tag):
-			if not TextParser.potential_advert(attrs):
-				return True
+#			if not TextParser.potential_advert(attrs):
+			return True
 		return False
 
+	'''
 	@staticmethod
 	def potential_advert(attrs):
 		# Returns whether the tag is a potential advertisement.
@@ -48,7 +49,7 @@ class TextParser(object):
 			if ad_class_regex.search(attrs.get('class', '')):
 				return True
 		return False
-
+	'''
 
 class SearchResultParser(object):
 	''' Parser that parses for search result links '''

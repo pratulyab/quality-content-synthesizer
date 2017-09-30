@@ -136,6 +136,7 @@
   <footer class="page-footer white">
     <div class="container">
         <div class="row center">
+                <div class="row"><a id="menu" class="col s2 right" style="cursor:pointer;color:#da181f;"><i class="material-icons" onclick="$('.tap-target').tapTarget('open')" style="font-size:45px;">info</i></a>&nbsp;&nbsp;&nbsp;&nbsp;</div>
             <div class="col s12 m3 l3" style="color:darkslategray">
                   <form action="#">
                     <p class="range-field">
@@ -158,19 +159,18 @@
                <button id="searchReq" data-target="modal1" data-toggle="modal" style="background-color:#002D6F" class="btn modal-trigger" >Search</button>                
             </div>    
         </div> 
+		<!--
         <div id="linksToScrape" class="row" style="color:black;">
             <div class="col s12 m10 l11 ">
           <p style="color:#002D6F">We are a team of college students working on this project like it's our full time job. To Create a tool that could crawl the web on a specific topic and create a synthesis of the content found – the challenge is to mitigate the sources depending on their quality. Solution shows content from various sources and rates those sources based on the quality of content. Also, our solution is able to crawl automatically and learn from the content and the source.</p>
             <!--   .tap-target   -->
             
         </div>
-            <div class="col s12 m2 l1">
-                <a id="menu" style="cursor:pointer;align:center;color:#da181f;font-size:95px;float:right;"><i class="material-icons" onclick="$('.tap-target').tapTarget('open')" style="font-size:45px;">info</i></a>&nbsp;&nbsp;&nbsp;&nbsp;    
-            </div>
         </div>
+		-->
         
         <!-- PRE LOADER -->
-    <div id="searchLoader" class="progress">
+    <div id="searchLoader" style="width: 70%; margin: 0 auto;" class="progress">
         <div class="indeterminate" style="width: 70%"></div>
     </div>
    <!-- PRE LOADER ENDS -->
@@ -201,7 +201,7 @@
 			<h4 class="flow-text">What's the need of this?</h4>
 			<p>
 				Our application is running on free heroku servers. Heroku has a drawback that it timeouts the client connection after 30 seconds, irrespective of the completion of the processing.<br>
-				Since scraping of more links require more time and could exceed 30s, we, as of now, have limited the number of links being scraped.<br>
+				Since scraping many links requires more time and could exceed 30s, we, as of now, have limited the number of links being scraped.<br>
 				Please note that the number of links is not hardcoded. We've just scaled down to adjust with Heroku's caveat.<br>
 				PS. As per our testing, 120 links could easily be scraped in 25-28 seconds, but just for the sake of it, we've limited it to 50. (to handle unforseen errors)<br>
 				<b>Link to Heroku </b><a href="https://devcenter.heroku.com/articles/request-timeout" target="_blank">Issue</a>
@@ -218,7 +218,7 @@
             <div class="tap-target red darken-2" data-activates="searchReq">
                 <div class="tap-target-content white-text" style="width: 456px; height: 400px; top: 0px; right: 0px; bottom: 0px; left: 0px; padding: 56px; vertical-align: bottom;">
                     <p class="white-text">
-                        We've deployed on Heroku sever and it has limitations as it is a free deployment server. In future we will transfer our Quality Content Rating Web Crawler to a dedicated server (VPS on DigitalOcean). Please note that all errors are only due to limitations of heroku (deployment server). If the error persists or if you wish to verify, please run in a local environment.<br>
+                        Our application is running on free heroku servers. Heroku has a drawback that it timeouts the client connection after 30 seconds, irrespective of the completion of the processing. Since scraping many links can sometimes exceed 30s, Heroku closes the client connection with an error. If the error persists or if you wish to verify, please run in a local environment.<br>
 				<b>Link to Heroku </b><a href="https://devcenter.heroku.com/articles/request-timeout" target="_blank">Issue</a>
                     </p>
                 </div>
@@ -296,7 +296,7 @@
 
 				},
 				error: function(status, xhr, error) {
-					Materialize.toast("<span class='red-text'><b>Sorry, an error occurred.</b></span>", 5000);
+					Materialize.toast("<span class='red-text'><b>Heroku Timeout Error. Click <i class='material-icons'>info</i></b></span>", 5000);
 				},
 			});
         });     

@@ -26,7 +26,7 @@ def get_text_from_url(url):
 		parser = PARSER_LOOKUP['text'](html) # Create specific parser object
 		text = parser.get_text(encoding='utf-8') # Parse text
 	except Exception as e:
-		print('Exception: %s %s' % (e, url))
+#		print('Exception: %s %s' % (e, url))
 		raise gen.Return('')
 	# Tornado way of returning data from coroutines.
 	raise gen.Return(text)
@@ -50,7 +50,7 @@ def get_links_from_url(url):
 		parser = get_se_parser(url)(html)
 		links = parser.get_links()
 	except Exception as e:
-		print('Exception: %s %s' % (e, url))
+#		print('Exception: %s %s' % (e, url))
 		raise gen.Return([])
 	
 	raise gen.Return(links)
@@ -68,7 +68,7 @@ def boot(query, n):
 	fetching, fetched, processed = set(), set(), set() 
 	result = list()
 	TOTAL_PROCESSED = list() # Hack to limit slider range, because global int variable doesn't work with coroutine	
-	n = n + int(n * 0.4) # extra 20 accounts for urls with no text or request exceptions. Tries best to provide a total of n with text
+	n = n + int(n * 0.2) # extra 20% accounts for urls with no text or request exceptions. Tries best to provide a total of n with text
 	# Limiting this because of Heroku drawbacks as mentioned in the documentation(under DISCLAIMER) and the demo url.
 	# Link to heroku issue: https://devcenter.heroku.com/articles/request-timeout
 
@@ -102,8 +102,8 @@ def boot(query, n):
 			fetched.add(url)
 			if text:
 				result.append({'url': url, 'text': str(text)})
-			else:
-				print('no text for', url)
+#			else:
+#				print('no text for', url)
 		finally:
 			links_queue.task_done()
 

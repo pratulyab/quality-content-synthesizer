@@ -77,7 +77,7 @@ def rate(result):
     n_svd_features = 0
     for index in range(len(S)):
         if(S[index] < min_S_threshold):
-            no_svd_features = index
+            n_svd_features = index
             break
 
     #But if number of colums considered < 2, we set it to fallback_svd_features
@@ -86,7 +86,7 @@ def rate(result):
 
     #Multiply selected columns with it's respective S values
     # So that we give importance to the concepts which our algorithm is more confident about
-    lsa_vectors = U[:,:no_svd_features] * S[:no_svd_features]
+    lsa_vectors = U[:,:n_svd_features] * S[:n_svd_features]
 
     #Performing Spherical K means Clustering on LSA Vectors
     kmeans_result = SphericalKMeans(n_clusters=n_clusters).fit(lsa_vectors)
